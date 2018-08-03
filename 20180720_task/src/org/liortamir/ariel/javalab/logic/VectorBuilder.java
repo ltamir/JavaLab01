@@ -1,7 +1,5 @@
 package org.liortamir.ariel.javalab.logic;
 
-import java.io.IOException;
-
 import org.liortamir.ariel.javalab.exception.VectorException;
 import org.liortamir.ariel.javalab.persistency.MutableInteger;
 import org.liortamir.ariel.javalab.persistency.Vector;
