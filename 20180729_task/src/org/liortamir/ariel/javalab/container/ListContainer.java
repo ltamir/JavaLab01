@@ -41,7 +41,6 @@ public class ListContainer<O> implements Containable<O> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
