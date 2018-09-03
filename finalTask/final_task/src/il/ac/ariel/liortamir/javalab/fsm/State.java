@@ -10,7 +10,7 @@ public enum State {
 			return this.ordinal();
 		}
 	},
-	ACTIVE {	// has balance
+	NEW {	// has balance
 		@Override
 		int code() {
 			return this.ordinal();

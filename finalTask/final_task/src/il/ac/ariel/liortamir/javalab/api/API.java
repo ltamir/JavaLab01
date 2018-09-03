@@ -1,5 +1,10 @@
 package il.ac.ariel.liortamir.javalab.api;
 
+/**
+ * API holds the name for the data fields involved in this process
+ * @author liort
+ *
+ */
 public class API {
 
 	public static final String REQUEST_ID = "reqId";

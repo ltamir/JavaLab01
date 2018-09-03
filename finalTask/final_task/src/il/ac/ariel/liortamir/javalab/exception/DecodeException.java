@@ -1,6 +1,16 @@
 package il.ac.ariel.liortamir.javalab.exception;
 
-public class DecodeException extends Exception {
+/**
+ * This exception is thrown on a field validation
+ * @author liort
+ *
+ */
+public class DecodeException extends DataException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2982808470104041417L;
 
 	public DecodeException(String description) {
 		super(description);

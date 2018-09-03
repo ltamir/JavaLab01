@@ -1,8 +1,13 @@
 package il.ac.ariel.liortamir.javalab.bl;
 
 import il.ac.ariel.liortamir.javalab.model.Account;
-import il.ac.ariel.liortamir.javalab.model.Charge;
 
+/**
+ * Helper class to perform logic actions on account.<br>
+ * All methods are static.
+ * @author liort
+ *
+ */
 public class AccountHelper {
 
 	public static void reserve(Account account, double amount) {
@@ -31,8 +36,4 @@ public class AccountHelper {
 		account.setReservedBalance(reservedBalance - amount);
 	}
 	
-	public static Charge createCharge() {
-		Charge charge = new Charge();	// The initial state is State.RESERVED in Charge class
-		return charge;
-	}
 }

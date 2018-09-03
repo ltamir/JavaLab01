@@ -10,7 +10,7 @@ public class Charge {
 	private LocalDateTime datetime;
 	private double amount;
 	private Account account;
-	private State state = State.ACTIVE;
+	private State state = State.NEW;
 	
 	public Charge(){}
 	

@@ -5,7 +5,8 @@ import java.io.IOException;
 import il.ac.ariel.liortamir.javalab.api.API;
 import il.ac.ariel.liortamir.javalab.api.Codec;
 import il.ac.ariel.liortamir.javalab.exception.DataException;
-import il.ac.ariel.liortamir.javalab.exception.DecodeException;
+import il.ac.ariel.liortamir.javalab.exception.InvalidEntityException;
+import il.ac.ariel.liortamir.javalab.exception.InvalidStateException;
 import il.ac.ariel.liortamir.javalab.fsm.Event;
 import il.ac.ariel.liortamir.javalab.fsm.State;
 import il.ac.ariel.liortamir.javalab.fsm.StateMachine;
@@ -36,90 +37,138 @@ public class BusinessLogic {
 	private FileInputReader in = new FileInputReader("input.csv");
 	private FileOutputWriter out = new FileOutputWriter("output.csv");
 	protected AccountStorage db = AccountStorage.getInstance();
+	private DefaultHandler defaultHandler = new DefaultHandler();
 	
 	private final static Event[] events = Event.values();
+	
 	
 	public void run() {
 		StringBuilder rawResponse = new StringBuilder();
 		try {
 			in.prepareFile();
 			while(in.hasNext()) {
-				AbstractStateHandler handler;
-				State currentState;
-				EventData res = null;
-				EventData req = codec.decode(in.next());
-				int eventId = req.getAsInt(API.EVENT_ID);
 				
-				Account account = db.get(req.getAsInt(API.ACCOUNT));
-				Charge charge = account.getCharge(req.getAsInt(API.REQUEST_ID));
-				if(charge == null)	//new Charge
-					charge = AccountHelper.createCharge();
-				
-				currentState = charge.getState();
-
-				handler = stateMachine.getHandler(currentState, eventId);
-				if(handler == null) {
-					handler = new DefaultHandler(stateMachine);
-				}
-				
-				switch(events[eventId]) {
-				case RESERVE:
-					res = reserve(handler, req, account, charge);
-					break;				
-				case COMMIT:
-					res = commit(handler, req, account, charge);
-					break;
-				case REFUND:
-					res = refund(handler, req, account, charge);
-					break;
-				case UNRESERVE:
-					res = unreserve(handler, req, account, charge);
-					break;
-				case CREDIT:
-					break;
-					default:
-						break;
-				}
-				
-				rawResponse.append(codec.encode(res));
+				String output = readRequest(in.next()); 			
+				rawResponse.append(output);
 				rawResponse.append("\n");
+				
 			}
 			out.prepareFile(rawResponse.toString());
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (DecodeException e) {
-			e.printStackTrace();
-		} catch (DataException e) {
-			e.printStackTrace();
-		}catch(NullPointerException e) {
-			e.printStackTrace();
-		}catch(Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
-
-	// TODO implement each event as method and call the handler with the event's method
 	
-	private EventData reserve(AbstractStateHandler handler, EventData req, Account account, Charge charge) {
-		EventData res = handler.reserve(req, account, charge);
+	/**
+	 * Decode incoming String record into an EventData.<br>
+	 * Call {@link BusinessLogic#processData(EventData)} and encode the result into a String
+	 * @param record
+	 * @return String representing the request result
+	 */
+	private String readRequest(String record) {
+		String recordOut = null;
+		EventData res = null;
+		try {
+			EventData req = codec.decode(record);
+			
+			res = processData(req);
+			
+			recordOut = codec.encode(res);
+		}catch (DataException e) {
+			System.out.println(e.getMessage());
+			return record;
+		}
 		
-		charge.setState(stateMachine.getNextState(charge.getState(), req.getAsInt(API.EVENT_ID)));
+		return recordOut;
+	}
+	
+	
+	/**
+	 * Create  entities from the request and apply the handler<br>
+	 * according to the charge state 
+	 * @param req
+	 * @return
+	 */
+	private EventData processData(EventData req) {
+		
+		AbstractStateHandler handler;
+		State currentState = State.NEW;
+		EventData res = null;
+		int eventId = -1;
+		Account account = null;
+		Charge charge = null;
+		
+		try {
+			
+			eventId = req.getAsInt(API.EVENT_ID);
+			account = db.get(req.getAsInt(API.ACCOUNT));
+			charge = account.getCharge(req.getAsInt(API.REQUEST_ID));
+			if(charge == null)	//new Charge
+				currentState = State.NEW;
+			else
+				currentState = charge.getState();
+			
+			handler = stateMachine.getHandler(currentState, eventId);
+			
+			
+			switch(events[eventId]) {
+			case RESERVE:
+				res = handler.reserve(req, account, charge);
+				charge = account.getCharge(req.getAsInt(API.REQUEST_ID));
+				break;				
+			case COMMIT:
+				res = handler.commit(req, account, charge);
+				break;
+			case REFUND:
+				res = handler.refund(req, account, charge);
+				break;
+			case UNRESERVE:
+				res = handler.unreserve(req, account, charge);
+				break;
+			case CREDIT:
+				break;
+				default:
+					throw new InvalidStateException("Invalit eventId: " + eventId);
+			}
+			
+			handleState(charge, eventId, res.getAsString(API.REQUEST_STATUS));
+			
+		}catch (InvalidStateException e) {
+			System.out.println(e.getMessage());
+			res = defaultHandler.consume(req, e.getMessage());
+		}catch(NullPointerException e) {
+			System.out.println(e.getMessage());
+			res = defaultHandler.consume(req, e.getMessage());
+		} catch (InvalidEntityException e) {
+			System.out.println(e.getMessage());
+			res = defaultHandler.consume(req, e.getMessage());
+		}
+		
 		return res;
 	}
 	
-	private EventData commit(AbstractStateHandler handler, EventData req, Account account, Charge charge) {
-		EventData res = handler.consume(req, account, charge);
-		return res;
-	}
 	
-	private EventData refund(AbstractStateHandler handler, EventData req, Account account, Charge charge) {
-		EventData res = handler.consume(req, account, charge);
-		return res;
+	/**
+	 * Change the state of the charge according to the state machine rules
+	 * @param charge
+	 * @param eventId
+	 * @param status
+	 * @throws InvalidEntityException
+	 * @throws InvalidStateException
+	 */
+	private void handleState(Charge charge, int eventId, String status) throws InvalidEntityException, InvalidStateException{
+		if(!status.equals(API.OK))
+			return;
+		
+		if(charge == null)
+			throw new InvalidEntityException("Cannot change state on a null charge");
+		
+		
+		State currentState = charge.getState();
+		charge.setState(stateMachine.getNextState(currentState, eventId));
+		
 	}
+
 	
-	private EventData unreserve(AbstractStateHandler handler, EventData req, Account account, Charge charge) {
-		EventData res = handler.consume(req, account, charge);
-		return res;
-	}
 }

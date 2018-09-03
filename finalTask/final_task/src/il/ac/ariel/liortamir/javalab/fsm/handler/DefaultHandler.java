@@ -4,7 +4,6 @@ import il.ac.ariel.liortamir.javalab.api.API;
 import il.ac.ariel.liortamir.javalab.bl.EventData;
 import il.ac.ariel.liortamir.javalab.fsm.Event;
 import il.ac.ariel.liortamir.javalab.fsm.State;
-import il.ac.ariel.liortamir.javalab.fsm.StateMachine;
 import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
@@ -15,23 +14,34 @@ import il.ac.ariel.liortamir.javalab.model.Charge;
  */
 public class DefaultHandler extends AbstractStateHandler {
 
-	public DefaultHandler(StateMachine stateMachine) {
-		super(stateMachine);
-	}
 
 	@Override
 	public int hashCode() {
 		return State.ERROR.ordinal();
 	}
+	
+	
 
 	@Override
-	protected void consumeImpl(EventData req, EventData res, Account account, Charge charge) {
-		State currentState = charge.getState();
+	public EventData consume(EventData req, Account account, Charge charge) {
+		EventData res = createResponse(req);
+		State currentState = State.NEW;
+		
+		if(charge != null)
+			currentState = charge.getState();
+		
 		int eventId = req.getAsInt(API.EVENT_ID);
+		setNack(res, "Invalid Action. State: " + currentState + " -> " + Event.values()[eventId]);
+
+		return res;
+	}
+	
+	public EventData consume(EventData req, String error) {
+		EventData res = createResponse(req);
 		
-		res.set(API.REQUEST_STATUS, API.NOT_OK);
-		res.set(API.ERROR, "Invalid Action. State: " + currentState + " -> " + Event.values()[eventId]);
-		
+		setNack(res, error);
+
+		return res;
 	}
 
 }
