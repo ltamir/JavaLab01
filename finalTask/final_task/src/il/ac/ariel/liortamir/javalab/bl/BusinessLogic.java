@@ -127,6 +127,8 @@ public class BusinessLogic {
 				res = handler.unreserve(req, account, charge);
 				break;
 			case CREDIT:
+				res = handler.credit(req, account, charge);
+				charge = account.getCharge(req.getAsInt(API.REQUEST_ID));
 				break;
 				default:
 					throw new InvalidStateException("Invalit eventId: " + eventId);

@@ -6,6 +6,7 @@ import java.util.Map;
 import il.ac.ariel.liortamir.javalab.exception.InvalidStateException;
 import il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.CommitHandler;
+import il.ac.ariel.liortamir.javalab.fsm.handler.CreditHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.RefundHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.ReserveHandler;
 
@@ -31,6 +32,7 @@ public class StateMachine {
 		eventMap.put(State.RESERVED, new ReserveHandler());
 		eventMap.put(State.COMMITED, new CommitHandler());
 		eventMap.put(State.REFUND, new RefundHandler());
+		eventMap.put(State.CREDITED, new CreditHandler());
 	}
 	
 	private void initTransitionMap() {
@@ -40,6 +42,8 @@ public class StateMachine {
 		transitionMap[State.RESERVED.code()][Event.COMMIT.code()] = State.COMMITED;
 		transitionMap[State.RESERVED.code()][Event.UNRESERVE.code()] = State.NEW;
 		transitionMap[State.COMMITED.code()][Event.REFUND.code()] = State.REFUND;
+		
+		transitionMap[State.NEW.code()][Event.CREDIT.code()] = State.CREDITED;	//
 	}
 	
 	public State getNextState(State state, int eventId){
@@ -50,7 +54,7 @@ public class StateMachine {
 	
 	public AbstractStateHandler getHandler(State state, int eventId) throws InvalidStateException{
 		AbstractStateHandler handler = null;
-		State nextState = transitionMap[state.ordinal()][eventId];
+		State nextState = getNextState(state, eventId);
 		handler = eventMap.get(nextState);
 		
 		if(handler == null)

@@ -60,6 +60,12 @@ public abstract class AbstractStateHandler {
 		return res;
 	}
 	
+	public EventData credit(EventData req, Account account, Charge charge) throws InvalidStateException, InvalidEntityException{
+		EventData res = createResponse(req);
+		setNack(res, "Invalid credit event for state: " + charge.getState());
+		return res;
+	}
+	
 	public EventData unreserve(EventData req, Account account, Charge charge) throws InvalidStateException{
 		EventData res = createResponse(req);
 		setNack(res, "Invalid unreserve event for state: " + charge.getState());

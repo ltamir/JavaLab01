@@ -21,7 +21,7 @@ import il.ac.ariel.liortamir.javalab.fsm.Event;
  * REQUEST_ID 	- unique id for the request (in account level)
  * COMMAND 		- event ID
  * ACCOUNT 		- account id
- * AMOUNT		- double
+ * AMOUNT		- (signed) double
  * @author liort
  *
  */

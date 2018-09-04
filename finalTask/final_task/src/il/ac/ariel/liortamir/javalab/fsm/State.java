@@ -33,6 +33,12 @@ public enum State {
 		int code() {
 			return this.ordinal();
 		}
+	},
+	CREDITED {		// reserved amount withdrawn from balance
+		@Override
+		int code() {
+			return this.ordinal();
+		}
 	};
 	
 	

@@ -35,5 +35,9 @@ public class AccountHelper {
 		double reservedBalance = account.getReservedBalance();
 		account.setReservedBalance(reservedBalance - amount);
 	}
-	
+
+	public static void credit(Account account, double amount) {
+		double balance = account.getBalance();
+		account.setBalance(balance + amount);
+	}
 }

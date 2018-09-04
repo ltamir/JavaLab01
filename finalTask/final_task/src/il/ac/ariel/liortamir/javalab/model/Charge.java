@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import il.ac.ariel.liortamir.javalab.fsm.State;
 
-public class Charge {
+public abstract class Charge {
 
 	private int id;
 	private LocalDateTime datetime;

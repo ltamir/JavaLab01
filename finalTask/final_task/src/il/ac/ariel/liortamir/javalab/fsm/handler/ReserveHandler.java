@@ -2,6 +2,7 @@ package il.ac.ariel.liortamir.javalab.fsm.handler;
 
 import il.ac.ariel.liortamir.javalab.api.API;
 import il.ac.ariel.liortamir.javalab.bl.AccountHelper;
+import il.ac.ariel.liortamir.javalab.bl.ChargeFactory;
 import il.ac.ariel.liortamir.javalab.bl.EventData;
 import il.ac.ariel.liortamir.javalab.exception.InvalidEntityException;
 import il.ac.ariel.liortamir.javalab.exception.InvalidStateException;
@@ -34,11 +35,12 @@ public class ReserveHandler extends AbstractStateHandler {
 		if(charge != null && charge.getState() != State.NEW)
 			throw new InvalidStateException("Cannot reserve on state " + charge.getState());
 		
-		charge = new Charge(		// The initial state is State.NEW in Charge class
+		charge = ChargeFactory.getCharge(API.DEBIT,	//The initial state is State.NEW in Charge class
 				req.getAsInt(API.REQUEST_ID),
 				req.getAsDateTime(API.DATETIME),
 				chargeAmount,
 				account);
+
 
 		AccountHelper.reserve(account, chargeAmount);
 		account.addCharge(charge);

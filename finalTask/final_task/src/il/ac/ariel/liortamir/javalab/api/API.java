@@ -17,4 +17,7 @@ public class API {
 	public static final String NOT_OK = "nack";
 	
 	public static final String ERROR = "error";
+	
+	public static final String DEBIT = "debit";
+	public static final String CREDIT = "credit";
 }
