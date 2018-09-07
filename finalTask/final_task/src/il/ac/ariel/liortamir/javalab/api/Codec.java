@@ -11,17 +11,16 @@ import il.ac.ariel.liortamir.javalab.exception.EncodeException;
 import il.ac.ariel.liortamir.javalab.fsm.Event;
 
 /**
- * Decode a String representing a command into eventData.<br>
- * The fields in the string are separated by comma  and expected in the following order:<br>
- * Reserve: REQUEST_ID,DD/MM/YYYY HH:MM,COMMAND,ACCOUNT,AMOUNT<br>
- * Commit: REQUEST_ID,DD/MM/YYYY HH:MM,COMMAND,ACCOUNT,AMOUNT<br>
- * Refund: REQUEST_ID,DD/MM/YYYY HH:MM,COMMAND,ACCOUNT,AMOUNT<br>
- * <br>
+ * Decodes a String representing a request into {@link il.ac.ariel.liortamir.javalab.bl.EventData}<br/>
+ *  and EventData into a String representing a response.<br/>
+ * The fields in the string are separated by comma  and expected in the following order:<br/>
+ * REQUEST_ID,DD/MM/YYYY HH:MM,COMMAND,ACCOUNT,AMOUNT<br/>
  * Where:<br>
- * REQUEST_ID 	- unique id for the request (in account level)
- * COMMAND 		- event ID
- * ACCOUNT 		- account id
- * AMOUNT		- (signed) double
+ * REQUEST_ID 	- unique id for the request (in account level)<br/>
+ * COMMAND 		- event ID according to the ordinal of each member of {@link il.ac.ariel.liortamir.javalab.fsm.Event}<br/>
+ * ACCOUNT 		- account id<br/>
+ * AMOUNT		- (signed) double<br/>
+ * This class uses  {@link il.ac.ariel.liortamir.javalab.api.API} as the keys for each field.
  * @author liort
  *
  */
@@ -71,18 +70,25 @@ public class Codec {
 		StringBuilder response = new StringBuilder();
 		
 		if(isDebug)
-			System.out.println("Codec.encode: " + data);
+			System.out.println("Codec.encode(): before " + data);
 		
-		response.append(data.getAsString(API.REQUEST_ID));
-		response.append(SEPARATOR);
-		response.append(data.getAsString(API.EVENT_ID));
-		response.append(SEPARATOR);
-		response.append(data.getAsString(API.REQUEST_STATUS));
-		response.append(SEPARATOR);
-		response.append(data.getAsString(API.ERROR, ""));
+		try {
+			response.append(data.getAsString(API.REQUEST_ID));
+			response.append(SEPARATOR);
+			response.append(data.getAsString(API.EVENT_ID));
+			response.append(SEPARATOR);
+			response.append(data.getAsString(API.REQUEST_STATUS));
+			response.append(SEPARATOR);
+			response.append(data.getAsString(API.ERROR, ""));
+		}catch(ClassCastException e) {
+			throw new EncodeException(response.toString() + "," + e.getMessage());
+		}catch(NullPointerException e) {
+			throw new EncodeException(response.toString() + "," + e.getMessage());
+		}
+
 		
 		if(isDebug)
-			System.out.println("Codec.encode: " + response.toString());
+			System.out.println("Codec.encode(): after " + response.toString());
 		
 		return response.toString();
 	}

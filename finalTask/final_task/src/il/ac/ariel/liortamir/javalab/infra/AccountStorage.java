@@ -6,7 +6,7 @@ import java.util.Map;
 import il.ac.ariel.liortamir.javalab.model.Account;
 
 /**
- * Singletone representing a storage for all accounts
+ * Singletone representing a storage for all data
  * @author liort
  *
  */

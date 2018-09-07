@@ -1,7 +1,7 @@
 package il.ac.ariel.liortamir.javalab.exception;
 
 /**
- * This exception is thrown in case the data malformed (null or not comma separated)
+ * This exception is thrown in case of malformed data (null or not comma separated)
  * @author liort
  *
  */

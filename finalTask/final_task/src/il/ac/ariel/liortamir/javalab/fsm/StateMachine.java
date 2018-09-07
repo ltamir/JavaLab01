@@ -10,6 +10,15 @@ import il.ac.ariel.liortamir.javalab.fsm.handler.CreditHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.RefundHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.ReserveHandler;
 
+/**
+ * This class implements the State and Singletone design patterns.<br/>
+ * An array of {@link State} maps the State ordinal and and {@link Event} ordinal to a new State.<br/>
+ * A HashMap maps relevant states to their {@link il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler}<br/>
+ * implementation.
+ * 
+ * @author liort
+ *
+ */
 public class StateMachine {
 	
 	private static final StateMachine instance = new StateMachine();
@@ -21,10 +30,12 @@ public class StateMachine {
 	private State[][] transitionMap;
 	private Map<State, AbstractStateHandler> eventMap = new HashMap<>();
 	
+	
+	// ***** data init ***** //
+	
 	private StateMachine() {
 		initEventMap();
 		initTransitionMap();
-		
 	}
 	
 	private void initEventMap() {
@@ -46,12 +57,29 @@ public class StateMachine {
 		transitionMap[State.NEW.code()][Event.CREDIT.code()] = State.CREDITED;	//
 	}
 	
+	
+	// ***** exposed methods ***** //
+	
+	/**
+	 * Returns the next state according to the given state and event
+	 * @param state
+	 * @param eventId
+	 * @return State
+	 */
 	public State getNextState(State state, int eventId){
 		State nextState = transitionMap[state.ordinal()][eventId];
 		return nextState;
 	}
 	
-	
+	/**
+	 * Returns the appropriate handler for given state(current) and event.<br/>
+	 * This method does not change the state! Use {@link #getNextState(State, int)} to retrieve the next state.
+	 * 
+	 * @param state
+	 * @param eventId
+	 * @return
+	 * @throws InvalidStateException
+	 */
 	public AbstractStateHandler getHandler(State state, int eventId) throws InvalidStateException{
 		AbstractStateHandler handler = null;
 		State nextState = getNextState(state, eventId);

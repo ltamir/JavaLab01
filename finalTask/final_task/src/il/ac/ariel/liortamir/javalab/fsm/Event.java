@@ -1,5 +1,10 @@
 package il.ac.ariel.liortamir.javalab.fsm;
 
+/**
+ * Enum defining the available events for a request on a charge
+ * @author liort
+ *
+ */
 public enum Event {
 	RESERVE {			// Event Id 0
 		@Override

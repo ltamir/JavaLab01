@@ -2,6 +2,11 @@ package il.ac.ariel.liortamir.javalab.fsm;
 
 import il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler;
 
+/**
+ * Enum defining the states available for a {@link il.ac.ariel.liortamir.javalab.model.Charge} types 
+ * @author liort
+ *
+ */
 public enum State {
 
 	ERROR {	// no balance

@@ -3,6 +3,15 @@ package il.ac.ariel.liortamir.javalab.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Account holds general information as id and fullName<br/>
+ * and balance information: Account balance and reserved amount balance.<br/>
+ * Each {@link Charge} associated with each operation are saved into a Map with the {@link Charge#getId()} as key.<br/>
+ * The {@link #hashCode()} for this class uses the account ID.<br/>
+ *  
+ * @author liort
+ *
+ */
 public class Account {
 
 	private int id;
@@ -21,6 +30,7 @@ public class Account {
 	}
 	
 	// ***** getters and setters ***** //
+	
 	public int getId() {
 		return id;
 	}
@@ -59,20 +69,20 @@ public class Account {
 	public Map<Integer, Charge> getChargeList(){
 		return this.chargeList;
 	}
+
+	@Override
+	public int hashCode() {
+		return getId();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Account))
+			return false;
+		
+		return obj.hashCode() == hashCode();
+	}
 	
-//	// ***** Balance specific ***** //
-//	
-//	public void reserve(double amount){
-//		reservedBalance += amount;
-//	}
-//	
-//	public void commit(double amount){
-//		balance -= amount;
-//		reservedBalance -= amount;
-//	}
-//	
-//	public void refund(double amount){
-//		balance += amount;
-//		reservedBalance -= amount;
-//	}
+	
+
 }

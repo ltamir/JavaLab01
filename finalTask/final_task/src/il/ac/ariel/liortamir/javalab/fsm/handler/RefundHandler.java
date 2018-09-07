@@ -9,6 +9,12 @@ import il.ac.ariel.liortamir.javalab.fsm.State;
 import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
+/**
+ * Implementation of refund on Debit charge.<br/>
+ * The amount is added to the Account's balance.
+ * @author liort
+ *
+ */
 public class RefundHandler extends AbstractStateHandler {
 
 	

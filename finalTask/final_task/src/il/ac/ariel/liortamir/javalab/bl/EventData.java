@@ -4,6 +4,14 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A container class holding the data of a request or its response.<br>
+ * The class contains getters and setters for int, double, String and {@link java.time.LocalDateTime}.<br>
+ * 
+ * The key for each field must come from {@link il.ac.ariel.liortamir.javalab.api.API}
+ * @author liort
+ *
+ */
 public class EventData {
 
 	private Map<String, Object> dataMap = new HashMap<>();

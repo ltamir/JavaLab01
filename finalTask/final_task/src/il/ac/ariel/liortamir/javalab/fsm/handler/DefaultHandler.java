@@ -8,7 +8,8 @@ import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
 /**
- * dummy class for cases where the event is not mapped to any state
+ * dummy class for cases where the event is not mapped to any state.<br/>
+ * This implementation uses {@link #consume(EventData, String)} to generate a NACK response
  * @author liort
  *
  */
@@ -19,7 +20,6 @@ public class DefaultHandler extends AbstractStateHandler {
 	public int hashCode() {
 		return State.ERROR.ordinal();
 	}
-	
 	
 
 	@Override
@@ -36,6 +36,12 @@ public class DefaultHandler extends AbstractStateHandler {
 		return res;
 	}
 	
+	/**
+	 * Creates a response depicting an failure with the given error 
+	 * @param req
+	 * @param error
+	 * @return EventData
+	 */
 	public EventData consume(EventData req, String error) {
 		EventData res = createResponse(req);
 		

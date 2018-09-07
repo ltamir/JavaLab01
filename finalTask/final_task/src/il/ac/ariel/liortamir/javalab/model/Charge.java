@@ -4,6 +4,14 @@ import java.time.LocalDateTime;
 
 import il.ac.ariel.liortamir.javalab.fsm.State;
 
+/**
+ * The class holds all the Credit / Debit information in a request<br/>
+ * as well as the {@link il.ac.ariel.liortamir.javalab.fsm.State}.<br/>
+ * The class is marked as Abstract so only its sub classes will be instantiated.<br/>
+ * The {@link #hashCode()} for this class uses the Charge ID.<br/>
+ * @author liort
+ *
+ */
 public abstract class Charge {
 
 	private int id;
@@ -62,6 +70,20 @@ public abstract class Charge {
 		this.state = state;
 	}
 	
+	
+	@Override
+	public int hashCode() {
+		return getId();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Charge))
+			return false;
+		
+		return obj.hashCode() == hashCode();
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();

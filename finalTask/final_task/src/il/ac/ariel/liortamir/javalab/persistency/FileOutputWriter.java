@@ -5,9 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Reads given data file from .\data path and expose an Iterator <br>
- * to read each line in the file.
- * only non-empty lines are read. 
+ * Writes given String data to the given file.<br>
+ * If no path is given the file is saved to .\data path.<br>
  * @author liort
  *
  */

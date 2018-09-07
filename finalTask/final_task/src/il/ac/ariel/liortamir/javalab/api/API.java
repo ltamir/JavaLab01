@@ -1,7 +1,7 @@
 package il.ac.ariel.liortamir.javalab.api;
 
 /**
- * API holds the name for the data fields involved in this process
+ * API holds the name / key for the fields in {@link il.ac.ariel.liortamir.javalab.bl.EventData} involved in this process
  * @author liort
  *
  */

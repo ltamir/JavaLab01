@@ -1,7 +1,8 @@
 package il.ac.ariel.liortamir.javalab.exception;
 
 /**
- * This exception is thrown on a field validation
+ * This exception is thrown on a field validation during decode<br/>
+ * done by {@link il.ac.ariel.liortamir.javalab.api.Codec}
  * @author liort
  *
  */

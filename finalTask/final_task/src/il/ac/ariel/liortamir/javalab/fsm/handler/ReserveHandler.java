@@ -11,6 +11,13 @@ import il.ac.ariel.liortamir.javalab.fsm.State;
 import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
+/**
+ * Implementation of reserve on Debit charge.<br/>
+ * A new charge of Debit type is created.<br/>
+ * The amount is removed from the Account's balance and is added to the Account's Reserved balance
+ * @author liort
+ *
+ */
 public class ReserveHandler extends AbstractStateHandler {
 
 	@Override
