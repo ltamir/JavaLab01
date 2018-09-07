@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import il.ac.ariel.liortamir.javalab.fsm.State;
 
 /**
- * The class holds all the Credit / Debit information in a request<br/>
- * as well as the {@link il.ac.ariel.liortamir.javalab.fsm.State}.<br/>
- * The class is marked as Abstract so only its sub classes will be instantiated.<br/>
- * The {@link #hashCode()} for this class uses the Charge ID.<br/>
+ * The class holds all the Credit / Debit information in a request<br>
+ * as well as the {@link il.ac.ariel.liortamir.javalab.fsm.State}.<br>
+ * The class is marked as Abstract so only its sub classes will be instantiated.<br>
+ * The {@link #hashCode()} for this class uses the Charge ID.<br>
  * @author liort
  *
  */

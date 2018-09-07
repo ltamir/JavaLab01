@@ -10,7 +10,7 @@ import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
 /**
- * Implementation of commit on a reserved Debit charge.<br/>
+ * Implementation of commit on a reserved Debit charge.<br>
  * The amount is removed from the Account's reserved balance.
  * @author liort
  *

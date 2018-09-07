@@ -11,9 +11,9 @@ import il.ac.ariel.liortamir.javalab.fsm.handler.RefundHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.ReserveHandler;
 
 /**
- * This class implements the State and Singletone design patterns.<br/>
- * An array of {@link State} maps the State ordinal and and {@link Event} ordinal to a new State.<br/>
- * A HashMap maps relevant states to their {@link il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler}<br/>
+ * This class implements the State and Singletone design patterns.<br>
+ * An array of {@link State} maps the State ordinal and and {@link Event} ordinal to a new State.<br>
+ * A HashMap maps relevant states to their {@link il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler}<br>
  * implementation.
  * 
  * @author liort
@@ -72,12 +72,12 @@ public class StateMachine {
 	}
 	
 	/**
-	 * Returns the appropriate handler for given state(current) and event.<br/>
+	 * Returns the appropriate handler for given state(current) and event.<br>
 	 * This method does not change the state! Use {@link #getNextState(State, int)} to retrieve the next state.
 	 * 
 	 * @param state
 	 * @param eventId
-	 * @return
+	 * @return AbstractStateHandler
 	 * @throws InvalidStateException
 	 */
 	public AbstractStateHandler getHandler(State state, int eventId) throws InvalidStateException{

@@ -21,13 +21,13 @@ import il.ac.ariel.liortamir.javalab.persistency.FileInputReader;
 import il.ac.ariel.liortamir.javalab.persistency.FileOutputWriter;
 
 /**
- * Implements the logic of this process:<br/>
- * 1. Read input via {@link FileInputReader}<br/>
- * 2. for each request in the input: <br/>
- * 2.1. Convert request to {@link il.ac.ariel.liortamir.javalab.bl.EventData}<br/>
- * 2.2. Retrieve the appropriate {@link il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler}<br/>
- * 2.3. activate the handler and retrieve response as EventData<br/> 
- * 2.4. Convert the response to a String  and append the output buffer<br/>
+ * Implements the logic of this process:<br>
+ * 1. Read input via {@link FileInputReader}<br>
+ * 2. for each request in the input: <br>
+ * 2.1. Convert request to {@link il.ac.ariel.liortamir.javalab.bl.EventData}<br>
+ * 2.2. Retrieve the appropriate {@link il.ac.ariel.liortamir.javalab.fsm.handler.AbstractStateHandler}<br>
+ * 2.3. activate the handler and retrieve response as EventData<br> 
+ * 2.4. Convert the response to a String  and append the output buffer<br>
  * 3. Write the output buffer to {@link FileOutputWriter}
  * @author liort
  *
@@ -46,9 +46,9 @@ public class BusinessLogic {
 	// ***** ENTRY POINT ***** //
 	
 	/**
-	 * Prepare an input, iterate over the requests and write results.<br/>
-	 * Request and response are a String terminated by a {@code '\n'} sign.<br/>
-	 * This method calls {@link BusinessLogic#handleRequest(String)} to handle each request<br/>
+	 * Prepare an input, iterate over the requests and write results.<br>
+	 * Request and response are a String terminated by a {@code '\n'} sign.<br>
+	 * This method calls {@link BusinessLogic#handleRequest(String)} to handle each request<br>
 	 * and uses {@link java.lang.StringBuilder.StringBuilder} to aggregate the responses.
 	 */
 	public void run() {

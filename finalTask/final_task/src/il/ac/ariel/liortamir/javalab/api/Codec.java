@@ -11,15 +11,15 @@ import il.ac.ariel.liortamir.javalab.exception.EncodeException;
 import il.ac.ariel.liortamir.javalab.fsm.Event;
 
 /**
- * Decodes a String representing a request into {@link il.ac.ariel.liortamir.javalab.bl.EventData}<br/>
- *  and EventData into a String representing a response.<br/>
- * The fields in the string are separated by comma  and expected in the following order:<br/>
- * REQUEST_ID,DD/MM/YYYY HH:MM,COMMAND,ACCOUNT,AMOUNT<br/>
+ * Decodes a String representing a request into {@link il.ac.ariel.liortamir.javalab.bl.EventData}<br>
+ *  and EventData into a String representing a response.<br>
+ * The fields in the string are separated by comma  and expected in the following order:<br>
+ * REQUEST_ID,DD/MM/YYYY HH:MM,COMMAND,ACCOUNT,AMOUNT<br>
  * Where:<br>
- * REQUEST_ID 	- unique id for the request (in account level)<br/>
- * COMMAND 		- event ID according to the ordinal of each member of {@link il.ac.ariel.liortamir.javalab.fsm.Event}<br/>
- * ACCOUNT 		- account id<br/>
- * AMOUNT		- (signed) double<br/>
+ * REQUEST_ID 	- unique id for the request (in account level)<br>
+ * COMMAND 		- event ID according to the ordinal of each member of {@link il.ac.ariel.liortamir.javalab.fsm.Event}<br>
+ * ACCOUNT 		- account id<br>
+ * AMOUNT		- (signed) double<br>
  * This class uses  {@link il.ac.ariel.liortamir.javalab.api.API} as the keys for each field.
  * @author liort
  *
@@ -64,7 +64,7 @@ public class Codec {
 	 * Write fields into a comma delimited String
 	 * @param data
 	 * @return String
-	 * @throws DataException
+	 * @throws EncodeException
 	 */
 	public String encode(EventData data) throws EncodeException{
 		StringBuilder response = new StringBuilder();

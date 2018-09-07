@@ -11,7 +11,7 @@ import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
 /**
- * Implementation of unreserve on Debit charge.<br/>
+ * Implementation of unreserve on Debit charge.<br>
  * The amount is added to the Account's balance and removed from the Account's reserve balance.
  * @author liort
  *

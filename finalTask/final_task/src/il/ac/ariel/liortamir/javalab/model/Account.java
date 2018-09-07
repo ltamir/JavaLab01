@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The Account holds general information as id and fullName<br/>
- * and balance information: Account balance and reserved amount balance.<br/>
- * Each {@link Charge} associated with each operation are saved into a Map with the {@link Charge#getId()} as key.<br/>
- * The {@link #hashCode()} for this class uses the account ID.<br/>
+ * The Account holds general information as id and fullName<br>
+ * and balance information: Account balance and reserved amount balance.<br>
+ * Each {@link Charge} associated with each operation are saved into a Map with the {@link Charge#getId()} as key.<br>
+ * The {@link #hashCode()} for this class uses the account ID.<br>
  *  
  * @author liort
  *

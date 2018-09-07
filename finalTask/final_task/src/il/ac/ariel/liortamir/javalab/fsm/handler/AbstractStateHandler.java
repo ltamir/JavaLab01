@@ -9,7 +9,7 @@ import il.ac.ariel.liortamir.javalab.model.Account;
 import il.ac.ariel.liortamir.javalab.model.Charge;
 
 /**
- * Parent class for all event handlers.<br/>
+ * Parent class for all event handlers.<br>
  * This class contains the logical methods for all events. The default implementation returns Nack.
  * @author liort
  *
@@ -32,7 +32,7 @@ public abstract class AbstractStateHandler {
 	}
 
 	/**
-	 * Create a new {@link il.ac.ariel.liortamir.javalab.bl.EventData} depicting response<br/>
+	 * Create a new {@link il.ac.ariel.liortamir.javalab.bl.EventData} depicting response<br>
 	 * with the request identifiers in it.
 	 * @param req
 	 * @return EventData

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Reads given data file and expose an Iterator.<br/>
+ * Reads given data file and expose an Iterator.<br>
  * If no path is given the file is opened from .\data path.<br>
  * to read each line in the file.
  * only non-empty lines are read. 
