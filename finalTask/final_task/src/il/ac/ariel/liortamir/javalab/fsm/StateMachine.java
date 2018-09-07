@@ -9,6 +9,7 @@ import il.ac.ariel.liortamir.javalab.fsm.handler.CommitHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.CreditHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.RefundHandler;
 import il.ac.ariel.liortamir.javalab.fsm.handler.ReserveHandler;
+import il.ac.ariel.liortamir.javalab.fsm.handler.UnReserveHandler;
 
 /**
  * This class implements the State and Singletone design patterns.<br>
@@ -43,6 +44,7 @@ public class StateMachine {
 		eventMap.put(State.RESERVED, new ReserveHandler());
 		eventMap.put(State.COMMITED, new CommitHandler());
 		eventMap.put(State.REFUND, new RefundHandler());
+		eventMap.put(State.NEW, new UnReserveHandler());
 		eventMap.put(State.CREDITED, new CreditHandler());
 	}
 	
