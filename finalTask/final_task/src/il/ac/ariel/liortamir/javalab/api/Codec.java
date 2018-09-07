@@ -123,10 +123,13 @@ public class Codec {
 		int command;
 		try {
 			command = Integer.valueOf(rawEvent);	
-		}catch(NumberFormatException e) {throw new DecodeException("Invalid ID:" + rawEvent + " " + e.getMessage());}
+		}catch(NumberFormatException e) {
+			throw new DecodeException("Invalid ID:" + rawEvent + " " + e.getMessage());
+		}
 		
 		if(command < 0 && command >= Event.values().length)
 			throw new DecodeException("Invalid event:" + rawEvent + " " + "Invalid Command");
+		
 		return command;
 	}
 	
