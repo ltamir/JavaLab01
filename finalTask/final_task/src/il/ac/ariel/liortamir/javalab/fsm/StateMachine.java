@@ -66,8 +66,13 @@ public class StateMachine {
 	 * @param eventId
 	 * @return State
 	 */
-	public State getNextState(State state, int eventId){
-		State nextState = transitionMap[state.ordinal()][eventId];
+	public State getNextState(State state, int eventId) throws InvalidStateException{
+		State nextState = null;
+		try {
+			nextState = transitionMap[state.ordinal()][eventId];
+		}catch(IndexOutOfBoundsException e) {
+			throw new InvalidStateException("Invalid EventId " + eventId + " for state " + state);
+		}
 		return nextState;
 	}
 	
